@@ -287,6 +287,9 @@ int server_accept_tcp_client(int server_fd, struct client_connection *client_con
            fcntl(*client_conn->fd, F_SETFL, fcntl_flags | O_NONBLOCK) == -1)
     {
         LOG_ERROR("Failed to fcntl");
+
+        close(*client_conn->fd);
+        *client_conn->fd = -1;
         return 1;
     }
 
